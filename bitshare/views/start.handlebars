@@ -1,0 +1,79 @@
+<div id="start" data-role="page" class="page row">
+		
+	<div class="hr-header">
+		<hr />
+		<h2 class="align-center">Get Started</h2>
+	</div>
+
+	<form id="form-upload" class="well" action="upload" method="post" enctype="multipart/form-data">
+
+		<div id="errors" class="alert alert-danger" style="display:none;"></div>
+
+		<input type="file" name="myFile" id="myFile" />
+
+		<div class="row">
+			<div class="form-horizontal" id="form-advanced">
+				<div class="form-group">
+					<label for="address" class="required col-sm-4 control-label">File</label>
+					<div class="col-sm-8">
+						<input type="text" class="browse form-control" placeholder="Click browse to select and upload your file..." readonly /> 
+						<button id="browse" class="btn btn-primary browse">Browse</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="required col-sm-4 control-label">Title</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="title" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="required col-sm-4 control-label">Price</label>
+					<div class="col-sm-8">
+						<input type="text" class="amount form-control" name="price" placeholder="Price in USD" /> USD 
+						<span class="btc"></span><br />
+						<span class="text-muted">How much customers will have to pay in order to download your file. Minimum of ${{minPrice}}.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="required col-sm-4 control-label">Payment Address</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="address" placeholder="Your Bitcoin Address">
+						<span class="text-muted">The Bitcoin address to which all of your customer payments will be sent. This address will not be shown to customers (payments are forwarded through unique addresses for each transaction).</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-sm-4 control-label">Description</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" name="description"></textarea>
+						<span class="text-muted">A brief description about your file (1000 characters or less). <span id="characters">1000</span> characters remaining.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-sm-4 control-label">Author Name</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="author" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-sm-4 control-label">Email Address</label>
+					<div class="col-sm-8">
+						<input type="text" class="email form-control" name="email" />
+						<span class="text-muted">Enter an email if you would like your confirmation receipt sent to you. Your email will never be shown to others or shared with anyone.</span>
+					</div>
+				</div>
+				<button id="submit" class="align-right btn btn-success">Upload</button>
+			</div>
+		</div>
+
+		<div class="progress progress-striped">
+			<div class="progress-bar" role="progressbar" 
+					aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+				<span class="sr-only">0% Complete</span>
+			</div>
+		</div>
+
+		<div class="message-uploading alert alert-info">Your file is uploading now. You will be redirected once it is complete.</div>
+		<div class="clearfix"></div>
+	</form>
+
+</div>

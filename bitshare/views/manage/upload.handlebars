@@ -1,0 +1,41 @@
+<h2 class="title">Uploads</h2>
+
+<div id="uploads">
+	<table class="tablesorter">
+		<thead>
+		<tr>
+		  <th>ID</th>
+		  <th>Slug</th>
+		  <th>Title</th>
+		  <th data-filter="false">Filesize</th>
+		  <th data-filter="false">Price</th>
+		  <th>Payout Address</th>
+		  <th>Status</th>
+		  <th>Created</th>
+		  <th data-filter="false"></th>
+		</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	{{>pager}}
+</div>
+
+
+<link href="/css/tablesorter.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery.tablesorter.js"></script>
+<script>
+	$(function() {
+
+		Bitsie.Manage.setNav('.nav-upload');
+
+		var table = new Bitsie.Tablesorter('#uploads', {
+			ajaxUrl : '/api/upload/get?page={page}&size={size}',
+			processRow : function(row, r) {
+				row.push('<a href="/' + r.slug + '">View</a>');
+			}
+		});
+
+	});
+</script>

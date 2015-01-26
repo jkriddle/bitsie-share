@@ -1,0 +1,4 @@
+/bitshare/node_modules
+/bitshare/public/files
+/bitshare/tmp
+/bitshare/logs/*.log

@@ -1,0 +1,57 @@
+@using System.Web.Optimization
+@using Bitsie.Share.Domain
+@model Bitsie.Share.Web.Models.BaseViewModel
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    @Styles.Render("~/Bundles/Styles/core")
+    @Styles.Render("~/Bundles/Styles/plugins")
+    @Styles.Render("~/Bundles/Styles/app")
+    @Styles.Render("~/Bundles/Styles/public")
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+
+      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+      <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+
+</head>
+<body>
+
+		<div id="top" class="header">
+			<div class="container">
+				<a href="/" class="pull-left"><img class="bitsie_logo" src="/images/bitsie_logo.png"/><span class="circle">&#8226;</span><span class="share_logo"><em>share</em></span></a>
+				
+				<a href="/faq" class="faq pull-right"><img src="/images/faq_icon.png" /><span>FAQ</span></a>
+				<a href="/#how" class="scroll how pull-right"><img src="/images/how_icon.png" /><span>How It Works</span></a>
+				<a href="/start" class="share_now_button pull-right"><img src="/images/header_share_icon.png"/><span>Start Sharing</span></a>
+        
+			</div>
+		</div>
+
+		<div class="content container">
+
+			{{{body}}}
+
+
+			<div class="footer">
+				<p>&copy; <a href="http://www.bitsie.com">Bitsie</a> 2014 | <a href="/terms" class="text-muted">Terms of Service</a></p>
+
+				<a class="bitcoin" href="http://www.bitcoin.org" target="_blank">
+					<img src="/images/bitcoin.png" alt="Bitcoin accepted here" />
+				</a>
+			</div>
+
+		</div><!-- /.container -->
+
+</body>
+</html>

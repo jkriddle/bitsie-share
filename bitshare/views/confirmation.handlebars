@@ -1,0 +1,66 @@
+<div id="confirmation" data-role="page" class="page">
+
+	<h2>Upload Complete</h2>
+
+	<p>Your file has been uploaded successfully. To share this file with others you can use the following URL:</p>
+
+	<p><a href="{{host}}/{{upload.slug}}">{{host}}/{{upload.slug}}</a></p>
+
+	{{#if upload.email}}
+		<div class="alert alert-info">A copy of your receipt has been emailed to {{upload.email}}.</div>
+	{{/if}}
+
+	<h3>Upload Information</h3>
+
+	<p><a id="upload-delete" href="/delete/{{upload.slug}}" class="btn btn-danger">Delete Upload</a></p>
+
+	<table class="table table-bordered table-striped table-hover">
+		<tbody>
+			<tr>
+				<th>Upload ID</th>
+				<td>{{upload.slug}}</td>
+			</tr>
+			<tr>
+				<th>Share URL</th>
+				<td><a href="{{host}}/{{upload.slug}}">{{host}}/{{upload.slug}}</a></td>
+			</tr>
+			<tr>
+				<th>Title</th>
+				<td>{{upload.title}}</td>
+			</tr>
+			<tr>
+				<th>File Name</th>
+				<td>{{upload.filename}}</td>
+			</tr>
+			<tr>
+				<th>File Size</th>
+				<td>{{upload.filesize}} bytes</td>
+			</tr>
+			{{#if upload.description}}
+				<tr>
+					<th>Description</th>
+					<td>{{upload.description}}</td>
+				</tr>
+			{{/if}}
+			{{#if upload.author}}
+				<tr>
+					<th>Author Name</th>
+					<td>{{upload.authorName}}</td>
+				</tr>
+			{{/if}}
+			<tr>
+				<th>Payment Address</th>
+				<td>{{upload.payoutAddress}}</td>
+			</tr>
+			<tr>
+				<th>Customer Price</th>
+				<td>${{price}}</td>
+			</tr>
+			<tr>
+				<th>Upload Date</th>
+				<td>{{upload.createdAtString}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>

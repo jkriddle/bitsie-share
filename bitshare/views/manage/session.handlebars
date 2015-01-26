@@ -1,0 +1,38 @@
+<h2 class="title">Sessions</h2>
+
+<div id="sessions">
+	<table sessions="tablesorter">
+		<thead>
+		<tr>
+		  <th>ID</th>
+		  <th>Payment Address</th>
+		  <th data-filter="false">Price</th>
+		  <th data-filter="false">Paid</th>
+		  <th>Payout Sent</th>
+		  <th data-filter="false"></th>
+		</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	{{>pager}}
+</div>
+
+
+<link href="/css/tablesorter.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery.tablesorter.js"></script>
+<script>
+	$(function() {
+
+		Bitsie.Manage.setNav('.nav-session');
+
+		var table = new Bitsie.Tablesorter('#sessions', {
+			ajaxUrl : '/api/session/get?page={page}&size={size}',
+			processRow : function(row, r) {
+				row.push('<a href="/manage/session/' + r.id + '">Details</a>');
+			}
+		});
+
+	});
+</script>

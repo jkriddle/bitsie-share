@@ -1,0 +1,44 @@
+<h2 class="title">Session Details</h2>
+
+<div class="row">
+	<div id="template-container" class="col-md-12"></div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<form role="form">
+			<div class="form-group">
+				<br />
+				<button id="check-balance" class="btn btn-default">Check Balance</button>
+			</div>
+			<div class="form-group">
+				<div class="well" id="api-response" style="display:none;"></div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	$(function() {
+
+		var session;
+
+		Bitsie.Manage.setNav('.nav-session');
+
+		$.getJSON('/api/session/get/{{id}}', function(resp) {
+			session = resp;
+
+			Bitsie.Template('/templates/session_details.html', session, function(html) {
+				$('#template-container').html(html);
+			});
+		})
+		
+		$('#check-balance').click(function(e) {
+			e.preventDefault();
+			$.get('/api/check_balance/' + session.uploadId + '?address=' + session.paymentAddress, function(resp) {
+				$('#api-response').html(resp).show();
+			});
+		});
+
+	});
+</script>

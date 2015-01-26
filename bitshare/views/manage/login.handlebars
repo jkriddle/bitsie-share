@@ -1,0 +1,42 @@
+<h3>Login</h3>
+
+<form class="form-horizontal">
+	<div class="form-group">
+		<label for="username" class="col-sm-2 control-label">Username</label>
+		<div class="col-sm-10">
+			<input type="username" class="form-control" id="username" placeholder="Username" required="required" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="password" class="col-sm-2 control-label">Password</label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" id="password" placeholder="Password" required="required" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary">Sign In</button>
+		</div>
+	</div>
+</form>
+
+<script>
+	$(function() {
+		$('form').submit(function(e) {
+			e.preventDefault();
+
+			if (!$(this).valid()) return;
+
+			var form = {
+				username : $('#username').val(),
+				password : $('#password').val()
+			};
+
+			$.post('/api/login', form, function(resp) {
+				if (resp.success) window.location.href = '/manage/upload';
+				else alert("Invalid login.");
+			}, 'json');
+		});
+	});
+</script>

@@ -1,0 +1,149 @@
+{{#if paid}}
+
+	<div class="row">
+
+		<div class="col-sm-6 col-md-6 col-lg-5">
+
+			<h1>{{upload.title}}<br /><small>{{upload.filename}}</small></h1>
+
+			{{#if upload.description}}
+				<p class="text-muted">{{upload.description}}</p>
+			{{/if}}
+
+			{{#if upload.authorName}}
+				<p class="author"><small>Uploaded by {{upload.authorName}}</small></p>
+			{{/if}}
+		</div>
+
+		<div class="col-sm-6 col-md-6 col-lg-5">
+			<h3>Download</h3>
+			<p>Click the button below to download your file.</p>
+			<a class="btn btn-success btn-large" href="{{host}}/download/{{upload.slug}}?{{keyQuery}}">Download File</a>
+
+			<h3>Share</h3>
+			<p>Think others would like this? Copy the URL below and send it to your friends!</p>
+			<input type="text" class="form-control select" readonly value="{{host}}/{{upload.slug}}" />
+		</div>
+
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$('.select').select();
+			$('.select').click(function() {
+				$(this).select();
+			});
+		});
+	</script>
+
+{{else}}
+
+	<div class="row">
+
+		<div class="left-col col-sm-6 col-md-6 col-lg-5">
+	
+			<p class="alert alert-warning">You are required to make a payment in order to download this file. 
+			Please send ${{price}} to the address shown. After your payment has been received you will be redirected to a page to download your file.</p>
+
+			<p class="waiting align-center">
+				<strong>Waiting for payment...</strong><br />
+				<img src="/images/searching.gif" alt="" />
+			</p>
+
+			<div class="well qrcode align-center">
+				Send ${{price}} <span class="text-muted">(฿ {{btcPrice}})</span> here:
+
+				<div class="bitcoin-qrcode"></div>
+				
+				<a class="bitcoin-link" href="bitcoin:{{address}}?amount={{btcPrice}}&amp;label={{description}}">
+					{{address}}
+				</a>
+
+			</div>
+		</div>
+
+		<div class="col-sm-6 col-md-6 col-lg-7">
+
+			<h1>{{upload.title}}<br /><small>{{upload.filename}}</small></h1>
+
+			{{#if upload.authorName}}
+				<p><small>Uploaded by {{upload.authorName}}</small></p>
+			{{/if}}
+
+			{{#if upload.description}}
+				<p class="text-muted">{{upload.description}}</p>
+			{{/if}}
+
+			<form class="customer-receipt form-inline">
+				
+				<div id="email-errors" class="alert alert-danger" style="display:none;"></div>
+				<div id="email-success" class="alert alert-success" style="display:none;">Your email address has been saved.</div>
+
+				<div class="inner-form">
+					<p>Want to receive an email when your transaction has been confirmed? Enter you address below and we'll notify you when your download is ready.</p>
+
+					<div class="col-xs-9 form-group">
+						<label class="sr-only" for="email">Email address</label>
+						<input type="email" class="form-control" id="email" placeholder="Enter email address" />
+					</div>
+
+					<button id="submit" class="btn btn-success">Notify Me</button>
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+
+			var updatedAt = new Date('{{updatedAt}}');
+			var expires = moment(updatedAt).add('minute', 50);
+			var expireNotice = false;
+
+			// QR code
+			var lnk = $('.bitcoin-link');
+			var data = lnk.attr("href");
+			$('.bitcoin-qrcode').qrcode({
+				text : data,
+				width : 220,
+				height: 220
+			});
+
+			setInterval(function() {
+				// Check to see if our transaction has gone through.
+				$.getJSON('/api/verify_payment/{{id}}', function(resp) {
+					if (resp.paid) window.location = window.location + "?view=" + resp.view
+				});
+
+				// Check for expiring session
+				if (!expireNotice && new Date() > expires.toDate()) {
+					alert("Your session will expire in 10 minutes. Please refresh the page to genereate a new payment address if you have not already sent payment.");
+					expireNotice = true;
+				}
+			}, 1000);
+
+			$('.customer-receipt').submit(function(e) {
+				e.preventDefault();
+				var email = $('#email').val();
+				if (!email) {
+					showErrors(['Invalid email address.'], '#email-errors');
+					return;
+				}
+
+				$.post('/api/set_email?address={{address}}', {
+					email: email
+				}, function(resp) {
+					if (!resp.success) {
+						showErrors([resp.message], '#email-errors');
+						return;
+					}
+					$('.inner-form').hide();
+					$('#email-errors').hide();
+					$('#email-success').show();
+				}, 'json');
+			});
+		});
+	</script>
+
+{{/if}}
